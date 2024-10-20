@@ -1,7 +1,9 @@
+package src.Modelo;
+
 public class Federaciones {
     private String codigo; // Código alfanumérico de la federación
     private String nombre;  // Nombre de la federación
-//asasas
+    //asasas
     public Federaciones(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -30,3 +32,4 @@ public class Federaciones {
                 "codigo='" + codigo + '\'' + ", nombre='" + nombre + '\'' + '}';
     }
 }
+

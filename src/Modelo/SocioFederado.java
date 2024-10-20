@@ -1,3 +1,5 @@
+package src.Modelo;
+
 public class SocioFederado extends Socios {
     private String nif;
     private String federacion;
@@ -26,10 +28,11 @@ public class SocioFederado extends Socios {
 
     @Override
     public String toString() {
-        return "SocioFederado{" +
+        return "Modelo.SocioFederado{" +
                 super.toString() +
                 ", nif='" + nif + '\'' +
                 ", federacion='" + federacion + '\'' +
                 '}';
     }
 }
+

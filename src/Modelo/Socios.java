@@ -1,3 +1,5 @@
+package src.Modelo;
+
 public abstract class Socios {
     private String numeroSocio;
     private String nombre;

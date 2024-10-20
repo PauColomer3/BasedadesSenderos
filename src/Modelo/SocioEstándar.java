@@ -1,3 +1,5 @@
+package src.Modelo;
+
 public class SocioEstándar extends Socios {
     private String nif;
     private String seguroContratado;
@@ -11,14 +13,21 @@ public class SocioEstándar extends Socios {
     public String getNif() {
         return nif;
     }
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
 
     public String getSeguroContratado() {
         return seguroContratado;
     }
 
+    public void setSeguroContratado(String seguroContratado) {
+        this.seguroContratado = seguroContratado;
+    }
+
     @Override
     public String toString() {
-        return "SocioEstándar{" +
+        return "Modelo.SocioEstándar{" +
                 super.toString() +
                 ", nif='" + nif + '\'' +
                 ", seguroContratado='" + seguroContratado + '\'' +
