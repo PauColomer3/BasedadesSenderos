@@ -1,3 +1,5 @@
+package src.Modelo;
+
 public class Seguros {
     private String tipo; // Puede ser "Básico" o "Completo"
     private double precio;

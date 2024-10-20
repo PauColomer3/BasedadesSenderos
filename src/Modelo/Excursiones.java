@@ -1,3 +1,5 @@
+package src.Modelo;
+
 import java.util.Date;
 
 public class Excursiones {
@@ -57,7 +59,7 @@ public class Excursiones {
     }
     @Override
     public String toString() {
-        return "Excursiones{" +
+        return "src.Modelo.Excursiones{" +
                 "codExcursion='" + codExcursion + '\'' + ", descripcion='" + descripcion + '\'' + ", fecha=" + fecha +
                 ", numDias=" + numDias + ", precioInscripcion=" + precioInscripcion + '}';
     }

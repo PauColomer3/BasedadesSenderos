@@ -1,3 +1,5 @@
+package src.Modelo;
+
 public class SocioInfantil extends Socios {
     private String numeroSocioPadreOMadre;
 
@@ -16,7 +18,7 @@ public class SocioInfantil extends Socios {
 
     @Override
     public String toString() {
-        return "SocioInfantil{" +
+        return "Modelo.SocioInfantil{" +
                 super.toString() +
                 ", numeroSocioPadreOMadre='" + numeroSocioPadreOMadre + '\'' +
                 '}';

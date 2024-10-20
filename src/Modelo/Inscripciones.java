@@ -1,3 +1,5 @@
+package src.Modelo;
+
 import java.util.Date;
 
 public class Inscripciones {
@@ -46,17 +48,7 @@ public class Inscripciones {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-//    // Método para cancelar la inscripción
-//    public boolean cancelarInscripcion(Date fechaExcursion) {
-//        if (fechaInscripcion.before(fechaExcursion)) {
-//            // Lógica para cancelar la inscripción
-//            System.out.println("Inscripción cancelada.");
-//            return true;
-//        } else {
-//            System.out.println("No se puede cancelar la inscripción. Debe hacerse antes de la fecha de la excursión.");
-//            return false;
-//        }
-//    }
+
 
     @Override
     public String toString() {

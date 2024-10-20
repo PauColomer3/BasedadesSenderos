@@ -1,3 +1,5 @@
+package src.Modelo;
+
 public class SeguroCompleto extends Seguros {
 
     public SeguroCompleto(double precio) {
@@ -6,7 +8,7 @@ public class SeguroCompleto extends Seguros {
 
     @Override
     public String toString() {
-        return "SeguroCompleto{" +
+        return "Modelo.SeguroCompleto{" +
                 super.toString() + // Incluye la representación de la clase padre
                 '}';
     }
