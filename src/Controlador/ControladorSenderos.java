@@ -1,5 +1,6 @@
 package src.Controlador;
 
+import src.ConexionBD;
 import src.Modelo.*;
 import src.Modelo.DAO.ExcursionesDAO;
 import src.Vista.VistaSenderos;
@@ -40,6 +41,9 @@ public class ControladorSenderos {
             int opcion = vista.obtenerOpcion();
 
             switch (opcion) {
+                case 0: // Nuevo caso para añadir Socio
+                    añadirSocio();
+                    break;
                 case 1:
                     AñadirExcursion();
                     break;
@@ -76,6 +80,7 @@ public class ControladorSenderos {
                 case 12:
                     mostrarInscripciones();
                     break;
+
                 default:
                     continuar = false;
                     break;
@@ -83,7 +88,6 @@ public class ControladorSenderos {
         }
         vista.cerrarScanner();
     }
-
     public void AñadirExcursion() {
         // Recopilar datos
         String codExcursion = vista.obtenerInput("Ingrese el código de la Excursion:");
@@ -429,6 +433,92 @@ public class ControladorSenderos {
             System.out.println("No se encontraron inscripciones que cumplan los criterios.");
         }
     }
+
+    public void añadirSocio() {
+        // Pedir el tipo de socio
+        System.out.println("Selecciona el tipo de socio:");
+        System.out.println("1. Socio Estándar");
+        System.out.println("2. Socio Federado");
+        System.out.println("3. Socio Infantil");
+        int tipoSocio = scanner.nextInt();
+        scanner.nextLine();  // Consumir el salto de línea
+
+        // Datos comunes para todos los socios
+        System.out.println("Introduce el número del socio:");
+        String numeroSocio = scanner.nextLine();
+
+        System.out.println("Introduce el nombre del socio:");
+        String nombre = scanner.nextLine();
+
+        // Conectar a la base de datos
+        try (Connection connection = ConexionBD.getConnection()) {
+            // Insertar en la tabla 'socios'
+            String insertSocioSQL = "INSERT INTO socios (numeroSocio, nombre) VALUES (?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSocioSQL)) {
+                preparedStatement.setString(1, numeroSocio);
+                preparedStatement.setString(2, nombre);
+                preparedStatement.executeUpdate();
+            }
+
+            // Insertar en la tabla correspondiente según el tipo de socio
+            switch (tipoSocio) {
+                case 1: // Socio Estándar
+                    System.out.println("Introduce el NIF del socio:");
+                    String nifEstandar = scanner.nextLine();
+
+                    System.out.println("Introduce el seguro contratado:");
+                    String seguroContratado = scanner.nextLine();
+
+                    String insertEstandarSQL = "INSERT INTO socioestándar (numeroSocio, nombre, nif, seguroContratado) VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(insertEstandarSQL)) {
+                        preparedStatement.setString(1, numeroSocio);
+                        preparedStatement.setString(2, nombre);
+                        preparedStatement.setString(3, nifEstandar);
+                        preparedStatement.setString(4, seguroContratado);
+                        preparedStatement.executeUpdate();
+                    }
+                    break;
+
+                case 2: // Socio Federado
+                    System.out.println("Introduce el NIF del socio:");
+                    String nifFederado = scanner.nextLine();
+
+                    System.out.println("Introduce la federación del socio:");
+                    String federacion = scanner.nextLine();
+
+                    String insertFederadoSQL = "INSERT INTO sociofederado (numeroSocio, nombre, nif, federacion) VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(insertFederadoSQL)) {
+                        preparedStatement.setString(1, numeroSocio);
+                        preparedStatement.setString(2, nombre);
+                        preparedStatement.setString(3, nifFederado);
+                        preparedStatement.setString(4, federacion);
+                        preparedStatement.executeUpdate();
+                    }
+                    break;
+
+                case 3: // Socio Infantil
+                    System.out.println("Introduce el número de socio del padre o madre:");
+                    String numeroSocioPadre = scanner.nextLine();
+
+                    String insertInfantilSQL = "INSERT INTO socioinfantil (numeroSocio, nombre, numeroSocioPadre) VALUES (?, ?, ?)";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(insertInfantilSQL)) {
+                        preparedStatement.setString(1, numeroSocio);
+                        preparedStatement.setString(2, nombre);
+                        preparedStatement.setString(3, numeroSocioPadre);
+                        preparedStatement.executeUpdate();
+                    }
+                    break;
+
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
+
+            System.out.println("Socio añadido correctamente.");
+        } catch (SQLException e) {
+            System.out.println("Error al añadir el socio: " + e.getMessage());
+        }}
+
     void mostrarFacturaMensual() {
         // Recorremos cada tipo de socio
         System.out.println("Generando facturas mensuales por socio...");
