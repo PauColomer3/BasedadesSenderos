@@ -1,6 +1,6 @@
 package src.Modelo;
 
-public abstract class Socios {
+public class   Socios {
     private String numeroSocio;
     private String nombre;
 
