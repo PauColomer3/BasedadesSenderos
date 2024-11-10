@@ -1,7 +1,13 @@
 package src.Controlador;
 
 import src.Modelo.*;
+import src.Modelo.DAO.ExcursionesDAO;
 import src.Vista.VistaSenderos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,30 +85,40 @@ public class ControladorSenderos {
     }
 
     public void AñadirExcursion() {
+        // Recopilar datos
         String codExcursion = vista.obtenerInput("Ingrese el código de la Excursion:");
         String descripcion = vista.obtenerInput("Ingrese la descripción de la Excursion:");
-        Date fecha = null;
-
-        while (fecha == null) {
-            String fechaStr = vista.obtenerInput("Ingrese la fecha de la Excursion (formato dd/MM/yyyy):");
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                fecha = sdf.parse(fechaStr);
-            } catch (ParseException e) {
-                vista.mostrarMensaje("Formato de fecha incorrecto. Use dd/MM/yyyy.");
-            }
-        }
-
+        Date fecha = obtenerFechaDesdeUsuario();
         int numDias = Integer.parseInt(vista.obtenerInput("Ingrese el número de días de la Excursion:"));
         float precioInscripcion = Float.parseFloat(vista.obtenerInput("Ingrese el precio de inscripción de la Excursion:"));
 
-        // Crear la nueva excursión
+        // Crear excursión y usar DAO
         Excursiones nuevaExcursion = new Excursiones(codExcursion, descripcion, fecha, numDias, precioInscripcion);
-        excursiones.add(nuevaExcursion);
-        vista.mostrarMensaje("Excursión añadida correctamente.");
+        if (excursionesDAO.agregarExcursion(nuevaExcursion)) {
+            vista.mostrarMensaje("Excursión añadida correctamente.");
+        } else {
+            vista.mostrarMensaje("Error al añadir la excursión.");
+        }
     }
 
+    private Date obtenerFechaDesdeUsuario() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = null;
+        while (fecha == null) {
+            try {
+                String fechaStr = vista.obtenerInput("Ingrese la fecha de la Excursion (formato dd/MM/yyyy):");
+                fecha = sdf.parse(fechaStr);
+            } catch (ParseException e) {
+                vista.mostrarMensaje("Formato de fecha incorrecto. Intente nuevamente.");
+            }
+        }
+        return fecha;
+    }
+
+    private ExcursionesDAO excursionesDAO = new ExcursionesDAO();
+
     private void mostrarExcursiones() {
+        ArrayList<Excursiones> excursiones = excursionesDAO.listarExcursiones();
         if (excursiones.isEmpty()) {
             vista.mostrarMensaje("No hay excursiones disponibles.");
         } else {

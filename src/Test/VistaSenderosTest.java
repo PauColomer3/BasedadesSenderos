@@ -1,36 +1,28 @@
-package src.Test;
-
-// src/test/java/Vista/VistaSenderosTest.java
-
-
+package src.Test;// src/test/java/Vista/VistaSenderosTest.java
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import src.Vista.VistaSenderos;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 class VistaSenderosTest {
 
     private VistaSenderos vista;
 
     @BeforeEach
     void setUp() {
-        // Inicializar la vista antes de cada prueba
+        // inicializar la vista antes de cada prueba
         vista = new VistaSenderos() {
-            // Sobrescribir el método obtenerInput para simular la entrada
+            // sustituir funcion input para introducir manualmente
             @Override
             public String obtenerInput(String mensaje) {
-                // Devuelve valores simulados según el mensaje
+                // esto devuelve los valores segun el mensaje, mas adelante se prueba con asserts
                 if (mensaje.contains("código")) {
                     return "EXC123";
                 } else if (mensaje.contains("descripción")) {
                     return "Excursión a la montaña";
                 } else if (mensaje.contains("fecha")) {
-                    return "20/10/2024"; // Fecha en formato dd/MM/yyyy
+                    return "20/10/2024"; //  formato dd/MM/yyyy
                 } else if (mensaje.contains("días")) {
                     return "3";
                 } else if (mensaje.contains("precio")) {
@@ -43,7 +35,7 @@ class VistaSenderosTest {
 
     @Test
     void testObtenerInput() {
-        // Verificar que obtenerInput devuelva la entrada correcta para cada mensaje
+        // comprobar que el input recibe la entrada correcta para cada mensaje
         assertEquals("EXC123", vista.obtenerInput("Introduce el código de la excursión: "));
         assertEquals("Excursión a la montaña", vista.obtenerInput("Introduce la descripción de la excursión: "));
         assertEquals("20/10/2024", vista.obtenerInput("Introduce la fecha (dd/MM/yyyy): "));
@@ -53,8 +45,8 @@ class VistaSenderosTest {
 
     @Test
     void testMostrarMensaje() {
-        // Usar un output stream para capturar lo que se imprime
-        // Simulamos la salida estándar para verificar el mensaje
+        // el output stream sirve para retener lo que enseña la consola
+        // simulamos la salida para comprobar que sea el mensaje esperrrado
         PrintStream originalOut = System.out;
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
@@ -62,10 +54,10 @@ class VistaSenderosTest {
         String mensaje = "¡Excursión añadida con éxito!";
         vista.mostrarMensaje(mensaje);
 
-        // Verificar que el mensaje mostrado es el esperado
+        // comprobar que el mensaje esperado y el transmitido es el mimso
         assertEquals(mensaje + System.lineSeparator(), outputStream.toString());
 
-        // Restaurar el output original
+        // volver el output original
         System.setOut(originalOut);
     }
 }

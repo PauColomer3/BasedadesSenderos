@@ -1,18 +1,13 @@
 package src.Test;
-
 // src/test/java/Controlador/ControladorSenderosTest.java
-
-
 import src.Controlador.ControladorSenderos;
 import src.Modelo.Excursiones;
 import src.Vista.VistaSenderos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ControladorSenderosTest {
@@ -26,7 +21,7 @@ class ControladorSenderosTest {
             // Sobrescribir métodos de entrada para evitar la interacción real con Scanner
             @Override
             public String obtenerInput(String mensaje) {
-                // Devuelve valores simulados, puedes ajustarlos según sea necesario
+                // Devuelve valores simulados, puede AJUSTARSE según sea necesario
                 if (mensaje.contains("código")) {
                     return "EXC123";
                 } else if (mensaje.contains("descripción")) {
@@ -43,19 +38,19 @@ class ControladorSenderosTest {
         };
 
         controlador = new ControladorSenderos();
-        controlador.vista = vista; // Asignar vista simulada al controlador
-        controlador.excursiones = new ArrayList<>(); // Asegurarnos de que la lista de excursiones está inicializada
+        controlador.vista = vista; // dadrle vista simulada al controlador
+        controlador.excursiones = new ArrayList<>(); // comprobar  que la lista de excursiones está inicializada
     }
 
     @Test
     void testAñadirExcursion() throws Exception {
-        // Llamar al método para añadir una excursión
+        // calleamos al metodo para añadir la excursion
         controlador.AñadirExcursion();
 
-        // Verificar que la excursión ha sido añadida
+        // check de haber añadido la excursion
         assertEquals(1, controlador.excursiones.size(), "Debería haber una excursión añadida.");
 
-        // Verificar los detalles de la excursión añadida
+        // revisar los detalles de los datos
         Excursiones excursion = controlador.excursiones.get(0);
         assertEquals("EXC123", excursion.getCodExcursion(), "El código de la excursión debería ser EXC123");
         assertEquals("Excursión a la montaña", excursion.getDescripcion(), "La descripción debería ser 'Excursión a la montaña'");
